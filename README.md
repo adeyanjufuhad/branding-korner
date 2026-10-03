@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Branding Korner Global Consult Limited: Website
 
-## Getting Started
+Marketing site for Branding Korner Global Consult Limited (RC 9589873), built with
+Next.js 16 (App Router), React 19, Tailwind CSS v4 and Motion.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| What | File |
+| --- | --- |
+| Company info, contact details, services, cities | `src/lib/site.ts` |
+| Brand colours (white-dominant, blue accent) | `src/app/globals.css` (`--color-brand-*`) |
+| Pages | `src/app/page.tsx`, `about/`, `services/`, `contact/` |
+| Shared site components | `src/components/site/` |
+| UI primitives (shadcn-style) | `src/components/ui/` |
+| Logo files | `public/brand/` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Before launch
 
-## Learn More
+1. In `src/lib/site.ts`, replace the placeholder **email, phone, WhatsApp number, social links and domain** (marked `TODO`).
+2. To deliver contact-form enquiries by email, copy `.env.example` to `.env.local` and add a [Resend](https://resend.com) API key and destination address.
 
-To learn more about Next.js, take a look at the following resources:
+## Adding 21st.dev components
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The project is set up to accept shadcn/21st.dev components: `components.json`, `@/lib/utils` (`cn`),
+`@radix-ui/react-slot`, `lucide-react` and `motion` are installed, and the shadcn colour tokens
+(`--primary`, `--border`, etc.) are mapped to the brand blues. Components can go straight into
+`src/components/ui/` and will pick up the brand palette.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Currently in use:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `ui/world-map.tsx`: adapted from Aceternity's [World Map](https://21st.dev/@manuarora700/components/world-map). The dotted map is pre-generated with `dotted-map` into `public/brand/world-dots.svg`, so nothing is computed in the browser.
+- `ui/glowing-effect.tsx`: Aceternity's [Glowing Effect](https://21st.dev/@manuarora700/components/glowing-effect), with an added `brand` variant (the default). Used on the home service cards, "Who we serve" and the About values.
+- `ui/bento-grid.tsx`: Kokonut UI's [Bento Grid](https://21st.dev/@kokonutd/components/bento-grid), restyled in brand blues with `dark:` styles removed (the site is light-only). Used as the services overview on `/services`.
+- `ui/text-rotate.tsx`, `ui/number-ticker.tsx`, and the tubelight nav in `site/navbar.tsx` follow popular 21st.dev patterns (Word Rotate, Number Ticker, Tubelight Navbar).

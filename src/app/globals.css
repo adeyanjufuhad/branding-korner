@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
+/* White-dominant palette, blue as the brand accent (sampled from the logo). */
+@theme {
+  --color-brand-50: #eff5ff;
+  --color-brand-100: #dbe8fe;
+  --color-brand-200: #bfd5fd;
+  --color-brand-300: #93b8fb;
+  --color-brand-400: #5f93f6;
+  --color-brand-500: #2f6fe6;
+  --color-brand-600: #0a5bbd;
+  --color-brand-700: #084a9c;
+  --color-brand-800: #083b7c;
+  --color-brand-900: #04225c;
+  --color-brand-950: #021539;
+
+  --color-ink: #0b1b36;
+  --color-muted: #5b6b84;
+  --color-line: #e4ebf5;
+
+  --font-sans: var(--font-jakarta);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite alternate;
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-spin-slower: spin 70s linear infinite reverse;
+  --animate-ping-slow: ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  @keyframes aurora {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(6%, -4%, 0) scale(1.1); }
+    100% { transform: translate3d(-5%, 5%, 0) scale(0.95); }
+  }
+  @keyframes shine {
+    0% { transform: translateX(-120%) skewX(-20deg); }
+    60%, 100% { transform: translateX(220%) skewX(-20deg); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+/* shadcn-compatible tokens so 21st.dev / shadcn components drop in on-brand */
 :root {
+  --radius: 0.75rem;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0b1b36;
+  --card: #ffffff;
+  --card-foreground: #0b1b36;
+  --popover: #ffffff;
+  --popover-foreground: #0b1b36;
+  --primary: #0a5bbd;
+  --primary-foreground: #ffffff;
+  --secondary: #eff5ff;
+  --secondary-foreground: #04225c;
+  --muted: #f4f7fc;
+  --muted-foreground: #5b6b84;
+  --accent: #dbe8fe;
+  --accent-foreground: #04225c;
+  --destructive: #dc2626;
+  --border: #e4ebf5;
+  --input: #d6e0ee;
+  --ring: #2f6fe6;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+  ::selection {
+    background: var(--color-brand-100);
+    color: var(--color-brand-900);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility container-x {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Faint blue dotted "map" texture used behind light sections */
+@utility bg-dots {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--color-brand-600) 18%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+/* Light sweep across primary CTAs */
+@utility shine {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.45), transparent);
+    animation: shine 3.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+/* Fine blue grid used behind heroes */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-brand-600) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-brand-600) 9%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Glassy white surface for floating cards */
+@utility glass {
+  background: rgb(255 255 255 / 0.72);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.8) inset,
+    0 20px 40px -20px rgb(4 34 92 / 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }
