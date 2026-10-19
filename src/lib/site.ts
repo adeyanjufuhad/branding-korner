@@ -9,29 +9,38 @@ import {
 } from "lucide-react";
 
 /**
- * Central company info. Update the contact details below before launch —
- * everything on the site (header, footer, contact page, metadata) reads from here.
+ * Central company info: everything on the site (header, footer, contact page,
+ * metadata, structured data) reads from here.
  */
+
+// No domain yet: set NEXT_PUBLIC_SITE_URL once one is bought. On Vercel the
+// production URL is picked up automatically until then.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const site = {
   name: "Branding Korner Global Consult Limited",
   shortName: "Branding Korner",
   tagline: "Your brand, business and ambitions, ready for the world.",
   description:
     "Branding Korner Global Consult Limited is a Lagos-based consultancy for branding, digital marketing, global documentation, business advisory, web solutions, recruitment and international trade support.",
-  url: "https://brandingkorner.com", // TODO: replace with the live domain
+  url: siteUrl.replace(/\/$/, ""),
   rcNumber: "9589873",
   incorporated: "4 June 2026",
   city: "Lagos, Nigeria",
-  // TODO: replace placeholders with real contact details
-  email: "hello@brandingkorner.com",
-  phone: "+234 800 000 0000",
-  whatsapp: "2348000000000", // international format, digits only
+  email: "brandingkorner@gmail.com",
+  phone: "+234 806 240 6168",
+  whatsapp: "2348062406168", // international format, digits only
   hours: "Mon – Sat · 8:00 – 18:00 WAT",
+  // Add profile URLs here; empty ones are hidden from the footer.
   socials: {
-    instagram: "#",
-    linkedin: "#",
-    x: "#",
-    facebook: "#",
+    instagram: "",
+    linkedin: "",
+    x: "",
+    facebook: "",
   },
 };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle2, Loader2, Send } from "lucide-react";
+import Link from "next/link";
 import { useActionState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -121,6 +122,14 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
         {pending ? <Loader2 className="animate-spin" /> : <Send />}
         {pending ? "Sending..." : "Send message"}
       </Button>
+      <p className="text-xs text-muted">
+        By sending this form you agree to us using your details to respond to your enquiry, as
+        described in our{" "}
+        <Link href="/privacy" className="font-semibold text-brand-600 hover:underline">
+          Privacy Policy
+        </Link>
+        .
+      </p>
     </form>
   );
 }

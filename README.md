@@ -24,8 +24,13 @@ npm run build    # production build
 
 ### Before launch
 
-1. In `src/lib/site.ts`, replace the placeholder **email, phone, WhatsApp number, social links and domain** (marked `TODO`).
-2. To deliver contact-form enquiries by email, copy `.env.example` to `.env.local` and add a [Resend](https://resend.com) API key and destination address.
+1. **Deploy** to [Vercel](https://vercel.com) (import the repo). Until a domain is bought, the site runs on the free `*.vercel.app` URL and SEO/sitemap URLs follow it automatically.
+2. **Contact form email**: create a free [Resend](https://resend.com) account with brandingkorner@gmail.com, then set `RESEND_API_KEY` and `CONTACT_TO_EMAIL` (see `.env.example`) in Vercel's environment variables.
+3. **After buying a domain**: set `NEXT_PUBLIC_SITE_URL`, verify the domain in Resend and set `CONTACT_FROM_EMAIL`.
+4. **Social profiles**: add URLs to `site.socials` in `src/lib/site.ts`; empty ones stay hidden.
+5. **Analytics**: enable Web Analytics in the Vercel project (the `<Analytics />` component is already installed).
+
+Also included: `sitemap.xml`, `robots.txt`, web manifest, a generated social share image, schema.org business data, a custom 404 page, Privacy Policy (NDPA 2023) and Terms pages, and a floating WhatsApp button.
 
 ## Adding 21st.dev components
 

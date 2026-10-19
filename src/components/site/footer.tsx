@@ -9,7 +9,8 @@ const socials = [
   { label: "LinkedIn", href: site.socials.linkedin },
   { label: "X", href: site.socials.x },
   { label: "Facebook", href: site.socials.facebook },
-];
+  { label: "WhatsApp", href: `https://wa.me/${site.whatsapp}` },
+].filter((s) => s.href);
 
 export function Footer() {
   return (
@@ -33,6 +34,8 @@ export function Footer() {
               <li key={s.label}>
                 <a
                   href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-white/90 transition hover:border-white/50 hover:bg-white/10"
                 >
                   {s.label}
@@ -96,7 +99,17 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
-          <p>Registered with the Corporate Affairs Commission, Nigeria · RC {site.rcNumber}</p>
+          <div className="flex flex-col gap-2 sm:items-end">
+            <p>Registered with the Corporate Affairs Commission, Nigeria · RC {site.rcNumber}</p>
+            <p className="flex gap-4">
+              <Link href="/privacy" className="hover:text-white">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="hover:text-white">
+                Terms of Service
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

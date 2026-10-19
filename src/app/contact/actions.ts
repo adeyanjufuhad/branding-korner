@@ -59,7 +59,7 @@ export async function sendEnquiry(_prev: ContactState, formData: FormData): Prom
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: process.env.CONTACT_FROM_EMAIL ?? "Branding Korner <onboarding@resend.dev>",
+      from: process.env.CONTACT_FROM_EMAIL || "Branding Korner <onboarding@resend.dev>",
       to,
       reply_to: email,
       subject: `New enquiry: ${service} from ${name}`,
